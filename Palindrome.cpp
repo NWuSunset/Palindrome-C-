@@ -12,7 +12,9 @@ int removeElement(char arr[], int len, char rem) {
     if (arr[i] == rem) { //if the element to remove is found
       len = len - 1; //make the length of the array shorter
         for (int j = i; j < len; j++) { //move all the elements right till the end of the new length
-          arr[j] = arr[j + i];
+	  //cout << "before: " << arr[j] << endl;
+	  arr[j] = arr[j + 1];
+	  //cout << "after: " << arr[j] << endl;
         }
     }
   }
@@ -32,7 +34,7 @@ int main() {
   int arrLen = sizeof(str) / sizeof(str[0]); 
 
   //Remove all non-letters 
-  for (int i = 0; i < arrLen; i++) {
+  for (int i = 0; i < arrLen - 1; i++) {
     if (ispunct(str[i]) || isspace(str[i])) {
       arrLen = removeElement(str, arrLen, str[i]); 
      }
@@ -44,7 +46,7 @@ int main() {
     str2[i] = str[strLength - i]; //go backwards through str and put that into str2 
     } */
 
-  //cout << str << endl;
+  cout << str << endl;
   for (int i = 0; i < arrLen; i++)
     cout << str[i] << " "; //printing out some weird stuff right now. (probably the null char or something)
   
