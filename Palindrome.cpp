@@ -1,3 +1,9 @@
+/*
+  A program that check if a input is a palindrome (excluding spaces and punctuation)
+  Nathaniel Wu
+  9/11/2024
+ */
+
 #include <iostream>
 #include <string.h>
 #include <cstring>
@@ -6,60 +12,41 @@
 using namespace std;
 
 //Functions have to be declared before main
-//remove an element (rem) from a char array
-int removeElement(char arr[], int len, char rem) {
-  int i;
-  for (i = 0; i < len; i++) {
-    if (arr[i] == rem)  //if the element to remove is found
-      break;
-
-    if (i < len) {
-      len = len - 1; //make the length of the array shorter
-        for (int j = i; j < len; j++) { //move all the elements right till the end of the new length
-	  arr[j] = arr[j + 1];
-        }
-  }
-  }
-  return len;
-} arrLen = removeElement(str, arrLen, str[remChar]);
 
 int main() {
-  //this gonna palindrome time
   char str[81]; //need 81 to account for a null character?
   char str2[81];
   cin.get(str, 81);
-  cin.get();
-  //send error if more than 80
+  cin.get(); //need another cin.get() to stop it from reading the retrun
 
   int strLength = strlen(str);
-  int arrLen = sizeof(str) / sizeof(str[0]); 
-  
-  int remCount = 0; //Needed for reversing as whenever an element is removed it adds an extra blank characters
-  //Remove all non-letters
+  int count = 0;
+  bool palindrome = false;
 
-  int remChar = 0;
-  for (int i = 0; i < strlen(str); i++) {
-    if (ispunct(str[i]) || isspace(str[i])) {
-       arrLen = removeElement(str, arrLen, str[i]);
-       //remChar = i;
-       //remCount++;
-     }
-  }
-  if (remCount > 0) {
-    //    arrLen = removeElement(str, arrLen, str[remChar]);
-  }
-  cout << str << endl;
-  cout << remCount << endl;
-  int n = strLength - 1;
-  //Then reverse the array
-  for (int i = 0; i < strLength; i++) { //go through length of string
-    cout << str[n] << endl;
-    str2[i] = str[n]; //assign the values of the string in backwards.
-    n--;
+  //remove all punctuation from the cstring
+  for (int i = 0; i < strLength; i++) {
+    if (!ispunct(str[i]) && !isspace(str[i])) {
+      str2[count] = tolower(str[i]); //change it to lowercase (in case it is uppercase)
+      count++; //if we assign a letter to this space move up
     }
+  }
+  str2[count] = '\0'; //assign null character to the end of str2 to end the string/cstring
+  
+  //check palindrome.  
+  for (int i = 0; i <= strlen(str2)/2; i++) { //only need to loop through half the string (since we check each side with each other)
+    if (str2[i] == str2[strlen(str2) - i - 1]) {//if a letter has an equal to the opposite side(subtract one since i starts at zero) 
+      palindrome = true; //if we stay true then we keep looping
+    } else {
+      palindrome = false;
+      i = 1000; //gets out of the loop if false
+    }
+  }
 
-  cout << str << endl;
-  cout << str2 << endl;
+  if (palindrome) {
+    cout << "Is a palindrome" << endl;
+  } else {
+    cout << "Is not a palindrome" << endl;
+  }
   return 0;
 }
 
